@@ -15,12 +15,13 @@ class UserController extends Controller {
    * @response 200 baseResponse 创建成功
    */
   async index() {
-    const { ctx } = this;
+    const { ctx,service } = this;
 
     // 校验参数
     ctx.validate(ctx.rule.createUserRequest)
-
-    const res = { abd: '123' }
+    // 组装参数
+    const payload = ctx.request.body || {}
+    const res = await service.user.create(payload)
     // 设置响应内容
     ctx.helper.success({ ctx, res })
   }
